@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Logo from './Logo';
 
 const links = [
   { label: 'Product', href: '#product' },
@@ -34,7 +33,6 @@ export default function Navbar() {
         className="flex items-center justify-between px-6 sm:px-10 md:px-14 py-4 sm:py-5"
       >
         <a href="/" className="flex flex-1 items-center gap-2.5" aria-label="COMO MD home">
-          <Logo className="w-6 h-6 text-[#191919]" />
           <span className="whitespace-nowrap font-semibold text-base tracking-tight text-[#191919]">COMO MD</span>
         </a>
 
