@@ -1,5 +1,8 @@
 import Navbar from './components/Navbar';
 import BoomerangVideoBg from './components/BoomerangVideoBg';
+import Projects from './components/Projects';
+import Location from './components/Location';
+import Footer from './components/Footer';
 
 export default function App() {
   return (
@@ -29,7 +32,12 @@ export default function App() {
             </a>
           </div>
         </section>
+
+        <Projects />
+        <Location />
       </main>
+
+      <Footer />
     </div>
   );
 }

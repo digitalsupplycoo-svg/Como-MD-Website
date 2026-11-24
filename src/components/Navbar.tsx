@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Logo from './Logo';
 
 const links = [
@@ -8,8 +9,26 @@ const links = [
 ];
 
 export default function Navbar() {
+  // Transparent over the hero video; solid once the page scrolls past it.
+  const [solid, setSolid] = useState(false);
+
+  useEffect(() => {
+    const update = () => setSolid(window.scrollY > window.innerHeight - 80);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 border-b transition-colors duration-200 ${
+        solid ? 'bg-white/90 backdrop-blur-sm border-gray-200' : 'bg-transparent border-transparent'
+      }`}
+    >
       <nav
         aria-label="Main"
         className="flex items-center justify-between px-6 sm:px-10 md:px-14 py-4 sm:py-5"
