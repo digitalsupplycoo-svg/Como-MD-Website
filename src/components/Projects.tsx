@@ -2,9 +2,9 @@ import { company, projects } from '../company';
 
 export default function Projects() {
   return (
-    <section id="projects" aria-labelledby="projects-title" className="border-t border-gray-200 bg-white">
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-14 py-20 md:py-28">
-        <div className="grid gap-8 md:grid-cols-2 md:gap-16">
+    <section id="projects" aria-labelledby="projects-title" className="scroll-mt-16 md:scroll-mt-20 border-t border-gray-200 bg-white">
+      <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-14 py-14 sm:py-20 md:py-28">
+        <div className="grid gap-5 sm:gap-8 md:grid-cols-2 md:gap-16">
           <div>
             <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium">Projects</p>
             <h2
@@ -19,7 +19,7 @@ export default function Projects() {
           </p>
         </div>
 
-        <ol className="mt-10 md:mt-14 border-t border-gray-200">
+        <ol className="mt-8 sm:mt-10 md:mt-14 border-t border-gray-200">
           {projects.map((project, i) => (
             <li
               key={project.name}

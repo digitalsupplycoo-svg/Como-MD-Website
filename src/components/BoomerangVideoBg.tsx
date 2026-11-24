@@ -13,7 +13,13 @@ const POSTER_URL = '/media/hero-poster.jpg';
 const MAX_CAPTURE_WIDTH = 960;
 /** Ping-pong playback rate. */
 const FPS = 30;
-const FRAME_INTERVAL = 1000 / FPS;
+
+/**
+ * Phones have far less memory for canvases (iOS Safari caps it), so there we keep
+ * every second frame at 640px and play them at half the rate: same motion speed,
+ * roughly a quarter of the memory.
+ */
+const isSmallScreen = () => window.matchMedia('(max-width: 767px)').matches;
 
 type FrameVideo = HTMLVideoElement & {
   requestVideoFrameCallback?: (
@@ -36,6 +42,12 @@ export default function BoomerangVideoBg() {
     const canvas = canvasRef.current;
     if (!video || !canvas) return;
 
+    const small = isSmallScreen();
+    const maxWidth = small ? 640 : MAX_CAPTURE_WIDTH;
+    const frameStep = small ? 2 : 1;
+    const frameInterval = (1000 / FPS) * frameStep;
+    let decoded = 0;
+
     const frames: HTMLCanvasElement[] = [];
     const supportsVFC = typeof video.requestVideoFrameCallback === 'function';
     let capturing = true;
@@ -49,8 +61,9 @@ export default function BoomerangVideoBg() {
       const { videoWidth, videoHeight } = video;
       if (!videoWidth || !videoHeight || mediaTime === lastTime) return;
       lastTime = mediaTime;
+      if (decoded++ % frameStep !== 0) return;
 
-      const scale = Math.min(1, MAX_CAPTURE_WIDTH / videoWidth);
+      const scale = Math.min(1, maxWidth / videoWidth);
       const width = Math.round(videoWidth * scale);
       const height = Math.round(videoHeight * scale);
 
@@ -97,9 +110,9 @@ export default function BoomerangVideoBg() {
 
       const tick = (now: number) => {
         if (disposed) return;
-        if (now - last >= FRAME_INTERVAL) {
+        if (now - last >= frameInterval) {
           // Keep cadence steady even if a frame is late.
-          last = now - ((now - last) % FRAME_INTERVAL);
+          last = now - ((now - last) % frameInterval);
           index += direction;
           if (index >= frames.length - 1) {
             index = frames.length - 1;

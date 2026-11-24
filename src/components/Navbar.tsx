@@ -52,7 +52,7 @@ export default function Navbar() {
         <div className="flex flex-1 justify-end">
           <a
             href="#contact"
-            className="whitespace-nowrap px-5 py-2.5 bg-[#191919] text-white text-sm font-medium rounded-lg hover:bg-[#191919]/90 transition-colors duration-200"
+            className="whitespace-nowrap px-4 py-2 sm:px-5 sm:py-2.5 bg-[#191919] text-white text-sm font-medium rounded-lg hover:bg-[#191919]/90 transition-colors duration-200"
           >
             <span className="sm:hidden">Request a Quote</span>
             <span className="hidden sm:inline">Request a Quotation</span>

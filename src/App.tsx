@@ -15,9 +15,11 @@ export default function App() {
 
           <div className="relative z-10 flex flex-col items-center text-center pt-24 sm:pt-26 md:pt-32 px-4 sm:px-6">
             <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium">
-              Building materials supplier · Abu Dhabi
+              <span>Building materials supplier</span>
+              <span className="hidden min-[390px]:inline"> · </span>
+              <span className="block min-[390px]:inline">Abu Dhabi</span>
             </p>
-            <h1 className="mt-4 sm:mt-5 font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tighter text-[#191919] font-normal">
+            <h1 className="mt-4 sm:mt-5 font-serif text-[clamp(2.25rem,11vw,3rem)] sm:text-5xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tighter text-[#191919] font-normal">
               Quality materials,
               <br />
               delivered on time.

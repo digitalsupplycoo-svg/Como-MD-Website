@@ -3,8 +3,8 @@ import { company } from '../company';
 
 export default function Location() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="border-t border-gray-200 bg-[#F4F3F3]">
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-14 py-20 md:py-28">
+    <section id="contact" aria-labelledby="contact-title" className="scroll-mt-16 md:scroll-mt-20 border-t border-gray-200 bg-[#F4F3F3]">
+      <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-14 py-14 sm:py-20 md:py-28">
         <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium">Location</p>
         <h2
           id="contact-title"
@@ -13,8 +13,8 @@ export default function Location() {
           Visit our store in Musaffah
         </h2>
 
-        <div className="mt-10 md:mt-14 grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-          <div className="flex flex-col bg-white border border-gray-200 p-6 sm:p-8">
+        <div className="mt-8 sm:mt-10 md:mt-14 grid gap-4 sm:gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+          <div className="flex flex-col bg-white border border-gray-200 p-5 sm:p-8">
             <dl className="divide-y divide-gray-200 text-sm text-[#191919]">
               <div className="pb-5">
                 <dt className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium">Company</dt>
@@ -57,7 +57,7 @@ export default function Location() {
                           <th scope="row" className="py-1 pr-4 text-left font-normal text-[#191919]/70">
                             {row.days}
                           </th>
-                          <td className="py-1 text-right tabular-nums">{row.time}</td>
+                          <td className="py-1 text-right tabular-nums whitespace-nowrap">{row.time}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -88,7 +88,7 @@ export default function Location() {
             </div>
           </div>
 
-          <div className="relative min-h-[320px] lg:min-h-0 border border-gray-200 bg-white">
+          <div className="relative min-h-[300px] sm:min-h-[360px] lg:min-h-0 border border-gray-200 bg-white">
             <iframe
               title={`Map showing ${company.legalName} in Musaffah, Abu Dhabi`}
               src={company.mapEmbedUrl}

@@ -3,7 +3,7 @@ import { company } from '../company';
 export default function Footer() {
   return (
     <footer className="border-t border-gray-200 bg-white">
-      <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-14 py-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-14 pt-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
           <div className="flex items-center gap-2.5">
             <span className="whitespace-nowrap font-semibold text-base tracking-tight text-[#191919]">
