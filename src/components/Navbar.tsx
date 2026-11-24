@@ -53,10 +53,11 @@ export default function Navbar() {
 
         <div className="flex flex-1 justify-end">
           <a
-            href="#demo"
-            className="px-5 py-2.5 bg-[#191919] text-white text-sm font-medium rounded-lg hover:bg-[#191919]/90 transition-colors duration-200"
+            href="#contact"
+            className="whitespace-nowrap px-5 py-2.5 bg-[#191919] text-white text-sm font-medium rounded-lg hover:bg-[#191919]/90 transition-colors duration-200"
           >
-            Book A Demo
+            <span className="sm:hidden">Request a Quote</span>
+            <span className="hidden sm:inline">Request a Quotation</span>
           </a>
         </div>
       </nav>
