@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 
-const VIDEO_URL =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260715_090628_7052d8a6-a094-4341-a4a2-ad58493a67a9.mp4';
+/**
+ * Self-hosted, web-optimised copy of the hero video (1280px, fast start, ~1.1MB).
+ * Original source:
+ * https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260715_090628_7052d8a6-a094-4341-a4a2-ad58493a67a9.mp4
+ */
+const VIDEO_URL = '/media/hero.mp4';
+/** First frame, shown instantly while the video loads. */
+const POSTER_URL = '/media/hero-poster.jpg';
 
 /** Captured frames are scaled down to at most this width. */
 const MAX_CAPTURE_WIDTH = 960;
@@ -157,6 +163,7 @@ export default function BoomerangVideoBg() {
         <video
           ref={videoRef}
           src={VIDEO_URL}
+          poster={POSTER_URL}
           muted
           playsInline
           preload="auto"
