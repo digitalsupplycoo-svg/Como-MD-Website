@@ -11,6 +11,8 @@ export default function Navbar() {
   const route = useRoute();
   const overHero = route.page === 'home';
   const headerRef = useRef<HTMLElement>(null);
+  const productsButton = useRef<HTMLButtonElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
 
   // Transparent over the home video; solid on other pages and once the home page scrolls past the video.
   const [scrolled, setScrolled] = useState(false);
@@ -33,7 +35,14 @@ export default function Navbar() {
   // Close an open panel with Escape or a click outside the header.
   useEffect(() => {
     if (!panel) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setPanel(null);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      // Focus would fall to the page top when the panel unmounts; return it to the button that opened it.
+      if (headerRef.current?.contains(document.activeElement)) {
+        (panel === 'products' ? productsButton : menuButton).current?.focus();
+      }
+      setPanel(null);
+    };
     const onDown = (e: PointerEvent) => {
       if (headerRef.current && !headerRef.current.contains(e.target as Node)) setPanel(null);
     };
@@ -79,6 +88,7 @@ export default function Navbar() {
 
         <div className="flex flex-1 items-center justify-end gap-1 sm:gap-3">
           <button
+            ref={productsButton}
             type="button"
             onClick={() => toggle('products')}
             aria-expanded={panel === 'products'}
@@ -100,6 +110,7 @@ export default function Navbar() {
             {ui.nav.quote}
           </Link>
           <button
+            ref={menuButton}
             type="button"
             onClick={() => toggle('menu')}
             aria-expanded={panel === 'menu'}
@@ -118,7 +129,7 @@ export default function Navbar() {
             <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-5">
               {groups.map((group) => (
                 <div key={group.id}>
-                  <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium">{group.name}</p>
+                  <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/65 font-medium">{group.name}</p>
                   <ul className="mt-3 space-y-2">
                     {products
                       .filter((p) => p.group === group.id)

@@ -19,7 +19,7 @@ export default function WhatsAppFloat() {
       rel="noopener noreferrer"
       aria-label={ui.whatsapp.float}
       title={ui.whatsapp.float}
-      className="fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] end-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/15 transition-transform duration-200 hover:scale-105"
+      className="fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] end-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-[#0b3d1f] shadow-lg shadow-black/15 transition-transform duration-200 hover:scale-105"
     >
       <WhatsAppIcon className="h-7 w-7" />
     </a>

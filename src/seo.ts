@@ -13,8 +13,9 @@ export type Head = {
 
 const brand = 'COMO MD';
 
-/** Share images as JPEG: some chat apps do not preview WebP. */
-const shareImage = (id: string, width: number, ratio?: number) => imageUrl(id, width, ratio).replace('fm=webp', 'fm=jpg');
+/** Share images as JPEG: some chat apps do not preview WebP. `auto=format` would override `fm=jpg`. */
+const shareImage = (id: string, width: number, ratio?: number) =>
+  imageUrl(id, width, ratio).replace('auto=format&', '').replace('fm=webp', 'fm=jpg');
 
 function abs(siteUrl: string, path: string) {
   return siteUrl ? `${siteUrl.replace(/\/$/, '')}${path}` : path;

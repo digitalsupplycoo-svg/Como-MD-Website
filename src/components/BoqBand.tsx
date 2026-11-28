@@ -5,7 +5,7 @@ import { ui } from '../copy';
 /** Bottom call to action on every page: send a full BOQ for pricing. */
 export default function BoqBand() {
   return (
-    <section aria-labelledby="boq-title" className="bg-[#191919] text-white">
+    <section aria-labelledby="boq-title" className="bg-[#191919] text-white [&_:focus-visible]:outline-white">
       <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-14 py-12 md:py-16 grid gap-6 md:grid-cols-[1fr_auto] md:items-center md:gap-12">
         <div>
           <h2 id="boq-title" className="font-serif text-2xl sm:text-3xl md:text-4xl font-normal leading-tight tracking-tight">

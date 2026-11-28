@@ -57,7 +57,8 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-gray-200">
-        <p className="mx-auto max-w-6xl px-6 sm:px-10 md:px-14 py-5 text-xs text-[#191919]/50">
+        {/* The year is baked in at build time; the browser may disagree after New Year. */}
+        <p suppressHydrationWarning className="mx-auto max-w-6xl px-6 sm:px-10 md:px-14 py-5 text-xs text-[#191919]/65">
           © {new Date().getFullYear()} {company.legalName}. {ui.footer.rights}
         </p>
       </div>

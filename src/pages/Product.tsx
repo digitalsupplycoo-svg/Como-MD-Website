@@ -44,7 +44,7 @@ export default function Product({ slug }: { slug: string }) {
         />
 
         <header className="mt-6 max-w-3xl">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium">{groupName(product.group)}</p>
+          <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/65 font-medium">{groupName(product.group)}</p>
           <h1 className="mt-3 font-serif text-4xl sm:text-5xl font-normal leading-[1.08] tracking-tight text-[#191919]">
             {product.name}
           </h1>
@@ -97,7 +97,7 @@ export default function Product({ slug }: { slug: string }) {
                 ))}
               </div>
             )}
-            <p className="mt-2 text-xs text-[#191919]/45">{p.photoNote}</p>
+            <p className="mt-2 text-xs text-[#191919]/65">{p.photoNote}</p>
           </section>
 
           <section aria-labelledby="overview-title">
@@ -116,7 +116,7 @@ export default function Product({ slug }: { slug: string }) {
               {p.specs}
             </h2>
             {table(product.specs)}
-            <p className="mt-3 text-xs text-[#191919]/55">{p.typical}</p>
+            <p className="mt-3 text-xs text-[#191919]/65">{p.typical}</p>
           </section>
 
           <section aria-labelledby="apps-title">
@@ -126,7 +126,7 @@ export default function Product({ slug }: { slug: string }) {
             <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
               {product.applications.map((a) => (
                 <li key={a} className="flex gap-2.5 text-[15px] text-[#191919]/80">
-                  <Check aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-[#191919]/50" />
+                  <Check aria-hidden="true" className="mt-1 h-4 w-4 shrink-0 text-[#191919]/65" />
                   {a}
                 </li>
               ))}
@@ -138,7 +138,7 @@ export default function Product({ slug }: { slug: string }) {
               {p.supply}
             </h2>
             {table(product.supply)}
-            <p className="mt-3 text-xs text-[#191919]/55">{p.typical}</p>
+            <p className="mt-3 text-xs text-[#191919]/65">{p.typical}</p>
           </section>
 
           <section aria-labelledby="why-title">
@@ -148,7 +148,7 @@ export default function Product({ slug }: { slug: string }) {
             <ol className="mt-5 grid gap-4 sm:grid-cols-3">
               {ui.why.map((w, i) => (
                 <li key={w.title} className="rounded-xl border border-gray-200 bg-white p-5">
-                  <span className="text-sm text-[#191919]/40 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="text-sm text-[#191919]/65 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
                   <p className="mt-2 font-medium text-[#191919]">{w.title}</p>
                   <p className="mt-1.5 text-sm text-[#191919]/65 leading-relaxed">{w.text}</p>
                 </li>

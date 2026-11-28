@@ -12,7 +12,7 @@ export default function Home() {
         <BoomerangVideoBg />
 
         <div className="relative z-10 flex flex-col items-center text-center pt-24 sm:pt-26 md:pt-32 px-4 sm:px-6">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/65 font-medium">
             <span>{h.eyebrowA}</span>
             <span className="hidden min-[390px]:inline"> · </span>
             <span className="block min-[390px]:inline">{h.eyebrowB}</span>

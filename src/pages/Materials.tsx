@@ -20,7 +20,7 @@ export default function Materials() {
 
   return (
     <>
-      <section className="relative isolate overflow-hidden bg-[#191919] pt-16 sm:pt-[4.5rem]">
+      <section className="relative isolate overflow-hidden bg-[#191919] pt-16 sm:pt-[4.5rem] [&_:focus-visible]:outline-white">
         <img
           src={imageUrl(materialsHero.id, 1600, 9 / 16)}
           srcSet={imageSrcSet(materialsHero.id, [800, 1200, 1600, 2000], 9 / 16)}
@@ -99,7 +99,7 @@ export default function Materials() {
             <ProductCard key={product.slug} product={product} />
           ))}
         </div>
-        <p className="mt-6 text-xs text-[#191919]/50">
+        <p className="mt-6 text-xs text-[#191919]/65">
           {ui.product.typical} {ui.product.photoNote}
         </p>
       </section>

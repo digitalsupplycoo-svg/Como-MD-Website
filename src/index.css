@@ -5,6 +5,8 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    /* Keeps anchor targets and keyboard focus clear of the fixed header. */
+    scroll-padding-top: 5rem;
   }
   body {
     font-family: 'Inter', sans-serif;

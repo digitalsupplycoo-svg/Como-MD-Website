@@ -6,13 +6,12 @@ export const ui = {
     projects: 'Projects',
     contact: 'Contact',
     quote: 'Request a Quotation',
-    quoteShort: 'Request a Quote',
     products: 'Products',
     allProducts: 'View all building materials',
     quoteForm: 'Request a quote for several items',
     menu: 'Menu',
     closeMenu: 'Close menu',
-    homeLabel: 'COMO MD home',
+    homeLabel: 'COMO MD TRADING home',
   },
 
   home: {

@@ -17,7 +17,7 @@ export default function ProductCard({ product }: { product: Product }) {
         />
       </Link>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium">
+        <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/65 font-medium">
           {groupName(product.group)}
         </p>
         <h3 className="mt-2 font-serif text-xl sm:text-2xl font-normal leading-snug tracking-tight text-[#191919]">

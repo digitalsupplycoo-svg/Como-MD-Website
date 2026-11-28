@@ -25,7 +25,7 @@ const ANY = 'any';
  * and includes everything the visitor filled in. With `product` set, the product is fixed;
  * otherwise the visitor picks one (or "several items").
  */
-export default function QuoteForm({ product, id = 'quote' }: { product?: Product; id?: string }) {
+export default function QuoteForm({ product }: { product?: Product }) {
   const f = ui.form;
   const uid = useId();
   const [fields, setFields] = useState<Fields>({
@@ -89,14 +89,18 @@ export default function QuoteForm({ product, id = 'quote' }: { product?: Product
       .filter((l) => l !== null)
       .join('\n');
 
-    window.open(whatsappLink(message), '_blank', 'noopener');
+    const url = whatsappLink(message);
+    // In-app browsers (Instagram, Facebook) often block new tabs: then open WhatsApp in this tab.
+    const win = window.open(url, '_blank');
+    if (win) win.opener = null;
+    else window.location.href = url;
     setSent(true);
   };
 
   const input =
-    'mt-1.5 block w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-[#191919] placeholder:text-[#191919]/35 focus:border-[#191919] focus:outline-none focus:ring-1 focus:ring-[#191919]';
+    'mt-1.5 block w-full rounded-lg border border-gray-500 bg-white px-3.5 py-2.5 text-sm text-[#191919] placeholder:text-[#191919]/60 focus:border-[#191919] focus:outline-none focus:ring-1 focus:ring-[#191919]';
   const label = 'block text-sm font-medium text-[#191919]';
-  const optional = <span className="font-normal text-[#191919]/45"> ({f.optional})</span>;
+  const optional = <span className="font-normal text-[#191919]/65"> ({f.optional})</span>;
 
   const text = (key: keyof Fields, labelText: string, opts: { required?: boolean; type?: string; hint?: string; autoComplete?: string; inputMode?: 'tel' | 'text' } = {}) => {
     const err = key === 'name' || key === 'phone' ? errors[key] : undefined;
@@ -130,14 +134,14 @@ export default function QuoteForm({ product, id = 'quote' }: { product?: Product
   };
 
   return (
-    <form id={id} onSubmit={onSubmit} noValidate className="scroll-mt-24 rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-sm">
+    <form id="quote" onSubmit={onSubmit} noValidate className="rounded-xl border border-gray-200 bg-white p-5 sm:p-6 shadow-sm">
       <h2 className="font-serif text-2xl font-normal tracking-tight text-[#191919]">{f.title}</h2>
       <p className="mt-1.5 text-sm text-[#191919]/65">{f.lead}</p>
 
       <div className="mt-5 grid gap-4">
         {product ? (
           <div className="rounded-lg bg-[#F4F3F3] px-3.5 py-2.5 text-sm">
-            <span className="text-[#191919]/60">{f.product}: </span>
+            <span className="text-[#191919]/65">{f.product}: </span>
             <span className="font-medium text-[#191919]">{product.name}</span>
           </div>
         ) : (
@@ -202,7 +206,7 @@ export default function QuoteForm({ product, id = 'quote' }: { product?: Product
           </>
         )}
       </p>
-      <p className="mt-3 text-xs text-[#191919]/50">{f.privacy}</p>
+      <p className="mt-3 text-xs text-[#191919]/65">{f.privacy}</p>
     </form>
   );
 }

@@ -20,7 +20,7 @@ export type Route =
 /** Turns a URL path into a page. */
 export function parseRoute(rawPath: string): Route {
   let path = rawPath.split(/[?#]/)[0] || '/';
-  if (path.length > 1) path = path.replace(/\/+$/, '');
+  if (path.length > 1) path = path.replace(/\/+$/, '') || '/';
 
   if (path === '/') return { page: 'home', path };
   if (path === '/building-materials') return { page: 'materials', path };
@@ -48,7 +48,8 @@ export function RouterProvider({ initialPath, children }: { initialPath: string;
     const url = new URL(to, window.location.href);
     const hash = url.hash.slice(1);
     const samePage = url.pathname === window.location.pathname;
-    window.history.pushState(null, '', url.pathname + url.search + url.hash);
+    // Clicking a link to the page you are on should not add another Back step.
+    if (url.href !== window.location.href) window.history.pushState(null, '', url.pathname + url.search + url.hash);
     if (samePage) {
       scrollToHash(hash);
       return;
@@ -67,7 +68,9 @@ export function RouterProvider({ initialPath, children }: { initialPath: string;
   useEffect(() => {
     const onPop = () => {
       setPath(window.location.pathname);
-      setPendingHash(window.location.hash.slice(1));
+      // Without a hash, let the browser restore the scroll position of that history entry.
+      const hash = window.location.hash.slice(1);
+      if (hash) setPendingHash(hash);
     };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);

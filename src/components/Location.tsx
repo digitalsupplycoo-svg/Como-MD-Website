@@ -5,10 +5,10 @@ import WhatsAppIcon from './WhatsAppIcon';
 
 export default function Location() {
   const c = ui.contact;
-  const dt = 'text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium';
+  const dt = 'text-[11px] uppercase tracking-[0.2em] text-[#191919]/65 font-medium';
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="scroll-mt-16 md:scroll-mt-20 border-t border-gray-200 bg-[#F4F3F3]">
+    <section id="contact" aria-labelledby="contact-title" className="border-t border-gray-200 bg-[#F4F3F3]">
       <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-14 py-14 sm:py-20 md:py-28">
         <p className={dt}>{c.eyebrow}</p>
         <h2

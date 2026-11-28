@@ -3,11 +3,11 @@ import { ui } from '../copy';
 
 export default function Projects() {
   return (
-    <section id="projects" aria-labelledby="projects-title" className="scroll-mt-16 md:scroll-mt-20 border-t border-gray-200 bg-white">
+    <section id="projects" aria-labelledby="projects-title" className="border-t border-gray-200 bg-white">
       <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-14 py-14 sm:py-20 md:py-28">
         <div className="grid gap-5 sm:gap-8 md:grid-cols-2 md:gap-16">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/50 font-medium">{ui.projects.eyebrow}</p>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-[#191919]/65 font-medium">{ui.projects.eyebrow}</p>
             <h2
               id="projects-title"
               className="mt-3 font-serif font-normal text-3xl sm:text-4xl md:text-5xl leading-tight tracking-tight text-[#191919]"
@@ -24,7 +24,7 @@ export default function Projects() {
               key={project.name}
               className="grid grid-cols-[auto_1fr] items-baseline gap-x-4 sm:gap-x-6 gap-y-1 border-b border-gray-200 py-6 md:py-8 sm:grid-cols-[3rem_1fr_auto]"
             >
-              <span className="text-sm text-[#191919]/40 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+              <span className="text-sm text-[#191919]/65 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
               <div>
                 <h3 className="font-serif text-2xl md:text-3xl font-normal tracking-tight text-[#191919]">
                   {project.name}

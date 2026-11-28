@@ -26,7 +26,7 @@ const wordmark = {
 /**
  * Hexagon + "COMO MD TRADING" (+ the "Ask for anything, anytime" line when `tagline`).
  */
-export function LogoLockup({ tagline = false, compact = false }: { tagline?: boolean; compact?: boolean }) {
+export function LogoLockup({ tagline = false }: { tagline?: boolean }) {
   if (tagline) {
     return (
       <span className="inline-flex items-center gap-3.5">
@@ -47,7 +47,7 @@ export function LogoLockup({ tagline = false, compact = false }: { tagline?: boo
       <LogoMark className="h-8 w-8 shrink-0" />
       <span style={{ ...wordmark, letterSpacing: '0.04em' }} className="whitespace-nowrap text-[18px] leading-none">
         COMO MD
-        {!compact && <span className="hidden min-[380px]:inline"> TRADING</span>}
+        <span className="hidden min-[380px]:inline"> TRADING</span>
       </span>
     </span>
   );
