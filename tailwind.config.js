@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Inter', 'IBM Plex Sans Arabic', 'sans-serif'],
         serif: ['P22 Mackinac W01 Book', 'Georgia', 'serif'],
       },
       spacing: {
