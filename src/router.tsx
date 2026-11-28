@@ -10,39 +10,23 @@ import {
   type ReactNode,
 } from 'react';
 import { findProduct } from './data/products';
-import type { Lang } from './i18n';
 
 export type Route =
-  | { page: 'home'; lang: Lang; path: string }
-  | { page: 'materials'; lang: Lang; path: string }
-  | { page: 'product'; lang: Lang; path: string; slug: string }
-  | { page: 'notfound'; lang: Lang; path: string };
+  | { page: 'home'; path: string }
+  | { page: 'materials'; path: string }
+  | { page: 'product'; path: string; slug: string }
+  | { page: 'notfound'; path: string };
 
-/** Turns a URL path into a page. English pages have no prefix; Arabic pages start with /ar. */
+/** Turns a URL path into a page. */
 export function parseRoute(rawPath: string): Route {
   let path = rawPath.split(/[?#]/)[0] || '/';
   if (path.length > 1) path = path.replace(/\/+$/, '');
 
-  let lang: Lang = 'en';
-  let rest = path;
-  if (path === '/ar' || path.startsWith('/ar/')) {
-    lang = 'ar';
-    rest = path.slice(3) || '/';
-  }
-
-  if (rest === '/') return { page: 'home', lang, path };
-  if (rest === '/building-materials') return { page: 'materials', lang, path };
-  const match = rest.match(/^\/building-materials\/([a-z0-9-]+)$/);
-  if (match && findProduct(match[1])) return { page: 'product', lang, path, slug: match[1] };
-  return { page: 'notfound', lang, path };
-}
-
-/** The English path of a page (no /ar prefix), used to switch languages. */
-export function basePath(route: Route) {
-  if (route.page === 'home') return '/';
-  if (route.page === 'materials') return '/building-materials';
-  if (route.page === 'product') return `/building-materials/${route.slug}`;
-  return '/';
+  if (path === '/') return { page: 'home', path };
+  if (path === '/building-materials') return { page: 'materials', path };
+  const match = path.match(/^\/building-materials\/([a-z0-9-]+)$/);
+  if (match && findProduct(match[1])) return { page: 'product', path, slug: match[1] };
+  return { page: 'notfound', path };
 }
 
 type RouterValue = { route: Route; navigate: (to: string) => void };
@@ -60,21 +44,18 @@ export function RouterProvider({ initialPath, children }: { initialPath: string;
   const [pendingHash, setPendingHash] = useState<string | null>(null);
   const route = useMemo(() => parseRoute(path), [path]);
 
-  const navigate = useCallback(
-    (to: string) => {
-      const url = new URL(to, window.location.href);
-      const hash = url.hash.slice(1);
-      if (url.pathname === window.location.pathname) {
-        window.history.pushState(null, '', url.pathname + url.search + url.hash);
-        scrollToHash(hash);
-        return;
-      }
-      window.history.pushState(null, '', url.pathname + url.search + url.hash);
-      setPath(url.pathname);
-      setPendingHash(hash);
-    },
-    [],
-  );
+  const navigate = useCallback((to: string) => {
+    const url = new URL(to, window.location.href);
+    const hash = url.hash.slice(1);
+    const samePage = url.pathname === window.location.pathname;
+    window.history.pushState(null, '', url.pathname + url.search + url.hash);
+    if (samePage) {
+      scrollToHash(hash);
+      return;
+    }
+    setPath(url.pathname);
+    setPendingHash(hash);
+  }, []);
 
   // After a page change, jump to the requested section or the top.
   useEffect(() => {
@@ -103,7 +84,6 @@ export function useRouter() {
 }
 
 export const useRoute = () => useRouter().route;
-export const useLang = () => useRouter().route.lang;
 
 type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & { to: string };
 

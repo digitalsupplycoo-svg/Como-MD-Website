@@ -1,14 +1,11 @@
 import { company } from './company';
 import { findProduct, groupName, imageUrl, materialsHero, products } from './data/products';
-import { localePath, type Lang } from './i18n';
-import { basePath, type Route } from './router';
+import type { Route } from './router';
 
 export type Head = {
   title: string;
   description: string;
-  /** English path of the page (no /ar), used for canonical and language alternates. */
-  base: string;
-  lang: Lang;
+  path: string;
   image: string;
   noindex?: boolean;
   jsonLd: object[];
@@ -23,7 +20,7 @@ function abs(siteUrl: string, path: string) {
   return siteUrl ? `${siteUrl.replace(/\/$/, '')}${path}` : path;
 }
 
-function business(siteUrl: string, lang: Lang) {
+function business(siteUrl: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'HomeAndConstructionBusiness',
@@ -33,10 +30,8 @@ function business(siteUrl: string, lang: Lang) {
     logo: abs(siteUrl, '/logo.png'),
     image: abs(siteUrl, '/logo.png'),
     description:
-      lang === 'ar'
-        ? 'مورد مواد بناء في مصفح، أبوظبي: حديد التسليح والأخشاب والبلايوود والإسمنت والرمل وأغطية الحماية والمسامير.'
-        : 'Building materials supplier in Musaffah, Abu Dhabi: reinforcement steel, timber and plywood, cement, sand, protection sheets and fixings.',
-    ...(siteUrl ? { url: abs(siteUrl, localePath('/', lang)) } : {}),
+      'Building materials supplier in Musaffah, Abu Dhabi: reinforcement steel, timber and plywood, cement, sand, protection sheets and fixings.',
+    ...(siteUrl ? { url: abs(siteUrl, '/') } : {}),
     telephone: company.phoneIntl,
     address: {
       '@type': 'PostalAddress',
@@ -59,7 +54,7 @@ function business(siteUrl: string, lang: Lang) {
   };
 }
 
-function breadcrumbs(siteUrl: string, lang: Lang, items: { name: string; path: string }[]) {
+function breadcrumbs(siteUrl: string, items: { name: string; path: string }[]) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -67,42 +62,36 @@ function breadcrumbs(siteUrl: string, lang: Lang, items: { name: string; path: s
       '@type': 'ListItem',
       position: i + 1,
       name: item.name,
-      item: abs(siteUrl, localePath(item.path, lang)),
+      item: abs(siteUrl, item.path),
     })),
   };
 }
 
 export function getHead(route: Route, siteUrl: string): Head {
-  const lang = route.lang;
-  const ar = lang === 'ar';
-  const homeName = ar ? 'الرئيسية' : 'Home';
-  const materialsName = ar ? 'مواد البناء' : 'Building Materials';
   const defaultImage = abs(siteUrl, '/media/hero-poster.jpg');
 
   if (route.page === 'materials') {
     return {
-      lang,
-      base: '/building-materials',
-      title: ar ? `مورد مواد بناء في أبوظبي | ${brand}` : `Building Materials Supplier in Abu Dhabi | ${brand}`,
-      description: ar
-        ? 'حديد التسليح، شبك التسليح، سلك الربط، الخشب الأبيض، البلايوود، الإسمنت، الرمل، النايلون، لوح فلكسل والمسامير لمشاريع الإمارات. من مصفح، أبوظبي. اطلب عرض سعر.'
-        : 'Rebar, wire mesh, binding wire, white wood, plywood, cement, sand, polythene, Flexel board and nails for UAE projects. Supplied from Musaffah, Abu Dhabi. Request a quote.',
+      path: '/building-materials',
+      title: `Building Materials Supplier in Abu Dhabi | ${brand}`,
+      description:
+        'Rebar, wire mesh, binding wire, white wood, plywood, cement, sand, polythene, Flexel board and nails for UAE projects. Supplied from Musaffah, Abu Dhabi. Request a quote.',
       image: shareImage(materialsHero.id, 1200, 630 / 1200),
       jsonLd: [
-        business(siteUrl, lang),
-        breadcrumbs(siteUrl, lang, [
-          { name: homeName, path: '/' },
-          { name: materialsName, path: '/building-materials' },
+        business(siteUrl),
+        breadcrumbs(siteUrl, [
+          { name: 'Home', path: '/' },
+          { name: 'Building Materials', path: '/building-materials' },
         ]),
         {
           '@context': 'https://schema.org',
           '@type': 'ItemList',
-          name: materialsName,
+          name: 'Building Materials',
           itemListElement: products.map((p, i) => ({
             '@type': 'ListItem',
             position: i + 1,
-            name: p.name[lang],
-            url: abs(siteUrl, localePath(`/building-materials/${p.slug}`, lang)),
+            name: p.name,
+            url: abs(siteUrl, `/building-materials/${p.slug}`),
           })),
         },
       ],
@@ -111,46 +100,38 @@ export function getHead(route: Route, siteUrl: string): Head {
 
   if (route.page === 'product') {
     const product = findProduct(route.slug)!;
-    const name = product.name[lang];
+    const path = `/building-materials/${product.slug}`;
     return {
-      lang,
-      base: basePath(route),
-      title: ar ? `مورد ${name} في أبوظبي | ${brand}` : `${name} Supplier in Abu Dhabi | ${brand}`,
-      description: ar
-        ? `مورد ${name} في أبوظبي: ${product.summary.ar}. اطلب سعر ${name} لمشروعك في الإمارات من COMO MD في مصفح.`
-        : `${name} supplier in Abu Dhabi: ${product.summary.en}. Request a ${name} price for your UAE project from COMO MD in Musaffah.`,
+      path,
+      title: `${product.name} Supplier in Abu Dhabi | ${brand}`,
+      description: `${product.name} supplier in Abu Dhabi: ${product.summary}. Request a ${product.name} price for your UAE project from COMO MD in Musaffah.`,
       image: shareImage(product.images[0].id, 1200),
       jsonLd: [
         {
           '@context': 'https://schema.org',
           '@type': 'Product',
-          name,
-          description: product.overview[0][lang],
-          category: groupName(product.group)[lang],
+          name: product.name,
+          description: product.overview[0],
+          category: groupName(product.group),
           image: product.images.map((img) => shareImage(img.id, 1200)),
-          url: abs(siteUrl, localePath(basePath(route), lang)),
-          additionalProperty: product.specs.map((s) => ({
-            '@type': 'PropertyValue',
-            name: s.label[lang],
-            value: s.value[lang],
-          })),
+          url: abs(siteUrl, path),
+          additionalProperty: product.specs.map((s) => ({ '@type': 'PropertyValue', name: s.label, value: s.value })),
         },
-        breadcrumbs(siteUrl, lang, [
-          { name: homeName, path: '/' },
-          { name: materialsName, path: '/building-materials' },
-          { name, path: basePath(route) },
+        breadcrumbs(siteUrl, [
+          { name: 'Home', path: '/' },
+          { name: 'Building Materials', path: '/building-materials' },
+          { name: product.name, path },
         ]),
-        business(siteUrl, lang),
+        business(siteUrl),
       ],
     };
   }
 
   if (route.page === 'notfound') {
     return {
-      lang,
-      base: '/404',
-      title: ar ? `الصفحة غير موجودة | ${brand}` : `Page not found | ${brand}`,
-      description: ar ? 'هذه الصفحة غير موجودة.' : 'This page does not exist.',
+      path: '/404',
+      title: `Page not found | ${brand}`,
+      description: 'This page does not exist.',
       image: defaultImage,
       noindex: true,
       jsonLd: [],
@@ -158,14 +139,12 @@ export function getHead(route: Route, siteUrl: string): Head {
   }
 
   return {
-    lang,
-    base: '/',
-    title: ar ? `${brand} | مورد مواد بناء في أبوظبي` : `${brand} | Building Materials Supplier in Abu Dhabi`,
-    description: ar
-      ? 'COMO M D General Trading LLC تورّد مواد البناء والمستهلكات والعدد والأدوات اليدوية ومعدات السلامة لمشاريع البناء في أبوظبي من محلها في مصفح.'
-      : 'COMO M D General Trading LLC supplies building materials, consumables, hardware, hand tools and safety equipment to construction projects across Abu Dhabi from its store in Musaffah.',
+    path: '/',
+    title: `${brand} | Building Materials Supplier in Abu Dhabi`,
+    description:
+      'COMO M D General Trading LLC supplies building materials, consumables, hardware, hand tools and safety equipment to construction projects across Abu Dhabi from its store in Musaffah.',
     image: defaultImage,
-    jsonLd: [business(siteUrl, lang)],
+    jsonLd: [business(siteUrl)],
   };
 }
 
@@ -181,17 +160,14 @@ export function renderHead(head: Head, siteUrl: string) {
     `<meta property="og:site_name" content="${brand}" />`,
     `<meta property="og:title" content="${esc(head.title)}" />`,
     `<meta property="og:description" content="${esc(head.description)}" />`,
-    `<meta property="og:locale" content="${head.lang === 'ar' ? 'ar_AE' : 'en_AE'}" />`,
+    `<meta property="og:locale" content="en_AE" />`,
     `<meta property="og:image" content="${esc(head.image)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
   ];
   if (head.noindex) tags.push('<meta name="robots" content="noindex" />');
   if (siteUrl && !head.noindex) {
-    const url = abs(siteUrl, localePath(head.base, head.lang));
+    const url = abs(siteUrl, head.path);
     tags.push(`<link rel="canonical" href="${url}" />`, `<meta property="og:url" content="${url}" />`);
-    tags.push(`<link rel="alternate" hreflang="en" href="${abs(siteUrl, head.base)}" />`);
-    tags.push(`<link rel="alternate" hreflang="ar" href="${abs(siteUrl, localePath(head.base, 'ar'))}" />`);
-    tags.push(`<link rel="alternate" hreflang="x-default" href="${abs(siteUrl, head.base)}" />`);
   }
   for (const data of head.jsonLd) {
     tags.push(`<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`);
@@ -215,7 +191,6 @@ export function applyHead(head: Head) {
   meta('property', 'og:title', head.title);
   meta('property', 'og:description', head.description);
   meta('property', 'og:image', head.image);
-  meta('property', 'og:locale', head.lang === 'ar' ? 'ar_AE' : 'en_AE');
 
   const robots = document.head.querySelector('meta[name="robots"]');
   if (head.noindex && !robots) meta('name', 'robots', 'noindex');
@@ -231,13 +206,7 @@ export function applyHead(head: Head) {
 
   const canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
   if (canonical) {
-    const origin = new URL(canonical.href).origin;
-    canonical.href = origin + localePath(head.base, head.lang);
+    canonical.href = new URL(canonical.href).origin + head.path;
     meta('property', 'og:url', canonical.href);
-    const alt = (lang: string, href: string) =>
-      document.head.querySelector(`link[rel="alternate"][hreflang="${lang}"]`)?.setAttribute('href', href);
-    alt('en', origin + head.base);
-    alt('ar', origin + localePath(head.base, 'ar'));
-    alt('x-default', origin + head.base);
   }
 }

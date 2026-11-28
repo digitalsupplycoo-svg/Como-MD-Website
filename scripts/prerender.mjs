@@ -17,9 +17,8 @@ const siteUrl = (process.env.SITE_URL || configured || (vercelHost ? `https://${
 const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
 
 function page(urlPath) {
-  const { html, head, lang, dir } = render(urlPath, siteUrl);
+  const { html, head } = render(urlPath, siteUrl);
   return template
-    .replace('<html lang="en">', `<html lang="${lang}" dir="${dir}">`)
     .replace(/<!--head-start-->[\s\S]*?<!--head-end-->/, head)
     .replace('<div id="root"></div>', `<div id="root">${html}</div>`);
 }
@@ -33,19 +32,11 @@ for (const urlPath of paths) {
 fs.writeFileSync(path.join(dist, '404.html'), page('/404'));
 
 if (siteUrl) {
-  const enPaths = paths.filter((p) => !p.startsWith('/ar'));
-  const toAr = (p) => (p === '/' ? '/ar' : `/ar${p}`);
-  const entry = (loc, en) => `  <url>
-    <loc>${siteUrl}${loc}</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="${siteUrl}${en}" />
-    <xhtml:link rel="alternate" hreflang="ar" href="${siteUrl}${toAr(en)}" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${siteUrl}${en}" />
-  </url>`;
-  const urls = enPaths.flatMap((en) => [entry(en, en), entry(toAr(en), en)]);
+  const urls = paths.map((p) => `  <url><loc>${siteUrl}${p}</loc></url>`);
   fs.writeFileSync(
     path.join(dist, 'sitemap.xml'),
     `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.join('\n')}
 </urlset>
 `,

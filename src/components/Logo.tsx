@@ -25,12 +25,11 @@ const wordmark = {
 
 /**
  * Hexagon + "COMO MD TRADING" (+ the "Ask for anything, anytime" line when `tagline`).
- * Always laid out left to right, also on Arabic pages.
  */
 export function LogoLockup({ tagline = false, compact = false }: { tagline?: boolean; compact?: boolean }) {
   if (tagline) {
     return (
-      <span dir="ltr" lang="en" className="inline-flex items-center gap-3.5">
+      <span className="inline-flex items-center gap-3.5">
         <LogoMark className="h-14 w-14 shrink-0" />
         <span className="flex flex-col items-center leading-none">
           <span style={{ ...wordmark, letterSpacing: '0.04em' }} className="whitespace-nowrap text-[26px]">
@@ -44,7 +43,7 @@ export function LogoLockup({ tagline = false, compact = false }: { tagline?: boo
     );
   }
   return (
-    <span dir="ltr" lang="en" className="inline-flex items-center gap-2.5">
+    <span className="inline-flex items-center gap-2.5">
       <LogoMark className="h-8 w-8 shrink-0" />
       <span style={{ ...wordmark, letterSpacing: '0.04em' }} className="whitespace-nowrap text-[18px] leading-none">
         COMO MD
