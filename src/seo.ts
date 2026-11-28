@@ -30,6 +30,8 @@ function business(siteUrl: string, lang: Lang) {
     '@id': abs(siteUrl, '/#business'),
     name: company.legalName,
     alternateName: company.shortName,
+    logo: abs(siteUrl, '/logo.png'),
+    image: abs(siteUrl, '/logo.png'),
     description:
       lang === 'ar'
         ? 'مورد مواد بناء في مصفح، أبوظبي: حديد التسليح والأخشاب والبلايوود والإسمنت والرمل وأغطية الحماية والمسامير.'

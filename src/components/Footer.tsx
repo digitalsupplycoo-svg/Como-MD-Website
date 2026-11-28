@@ -1,6 +1,7 @@
 import { company } from '../company';
 import { localePath, ui } from '../i18n';
 import { Link, useLang } from '../router';
+import { LogoLockup } from './Logo';
 
 export default function Footer() {
   const lang = useLang();
@@ -8,8 +9,8 @@ export default function Footer() {
     <footer className="border-t border-gray-200 bg-white">
       <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-14 pt-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] grid gap-8 md:grid-cols-[1fr_auto_auto] md:gap-16">
         <div>
-          <span className="whitespace-nowrap font-semibold text-base tracking-tight text-[#191919]">{company.shortName}</span>
-          <p className="mt-3 text-sm text-[#191919]/60 leading-relaxed">
+          <LogoLockup tagline />
+          <p className="mt-5 text-sm text-[#191919]/60 leading-relaxed">
             {company.legalName}
             <br />
             {company.addressLines.map((l) => l[lang]).join(lang === 'ar' ? '، ' : ', ')}

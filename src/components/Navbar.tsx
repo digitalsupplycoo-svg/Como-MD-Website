@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { localePath, ui } from '../i18n';
 import { basePath, Link, useRoute } from '../router';
+import { LogoLockup } from './Logo';
 
 export default function Navbar() {
   const route = useRoute();
@@ -52,7 +53,7 @@ export default function Navbar() {
     >
       <nav aria-label="Main" className="flex items-center justify-between gap-3 px-6 sm:px-10 md:px-14 py-4 sm:py-5">
         <Link to={localePath('/', lang)} className="flex flex-1 items-center" aria-label={ui.nav.homeLabel[lang]}>
-          <span className="whitespace-nowrap font-semibold text-base tracking-tight text-[#191919]">COMO MD</span>
+          <LogoLockup />
         </Link>
 
         <ul className="hidden lg:flex items-center gap-8">
